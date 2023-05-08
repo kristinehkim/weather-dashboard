@@ -11,7 +11,6 @@ var searchInput = document.querySelector('#search');
 
 
 var init = function init() {
-    console.log("Do you see this?");
 };
 
 var onSearch = function (event) {
@@ -21,8 +20,20 @@ var onSearch = function (event) {
     //grab search input
 
     var searchValue = searchInput.value;
-    var searchResults = 
+    // var searchResults = '/forecast?'
+
+    function getApi() { 
+        var requestUrl = 'api.openweathermap.org/data/2.5/forecast?lat=&lon=&appid=weatherApiKey'
+
+    fetch(requestUrl)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data);
+        });
 };
+}
 
 searchButton.addEventListener('click', onSearch)
 
