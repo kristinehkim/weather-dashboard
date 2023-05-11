@@ -1,4 +1,31 @@
 .container {
     display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
     /* background-color: aqua; */
 }
+
+aside {
+    flex: 1;
+    text-align: left;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+.products {
+    flex: 4;
+    background-color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+.card {
+    border-style: solid;
+    border-width: 1px;
+    padding: 10px;
+    flex: 0 0 300px;
+    box-shadow: 10px 10px 5px #aaaaaa;
+    margin: 20px;
+  }
