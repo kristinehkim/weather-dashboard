@@ -4,8 +4,8 @@ let forecastContainer = document.querySelector('#forecast-container');
 let weatherContainer = document.querySelector('#weather-container');
 let searchButton = document.querySelector('#search-button');
 let searchInput = document.querySelector('#search');
-
 let currentDay = dayjs().format('dddd, MM/DD/YYYY');
+let searchHistory = [ ]
 
 // onSearch is an eventListener that is grabbing the searchValue, and passing it to the fetchCoords function
 function onSearch(event) {
@@ -13,9 +13,17 @@ function onSearch(event) {
     let searchValue = searchInput.value;
     // var searchResults = '/forecast?'
     localStorage.setItem('city', searchValue);
+    // searchHistory.push.(searchValue)
+    // localStorage.setItem('city', searchHistory.value)
     // fetchCoords is being called, this returns the lat and lon data
     fetchCoords(searchValue);
 }
+//declare global variable of search history as an empty array.  Then push that value to the array and set that search history array to local storage.
+// Update the array, JSON stringify it, and store 
+// on load you have to parse it
+// Start with saving the array
+// create a new element of list item, add the search value as its value, append the list item that will display the search history
+
 // taking the cityName the user inputs and getting the lat and lon
 function fetchCoords(cityName) {
     let requestUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${anotherKey}`//template literals or template string - ${variable}, the whole thing in back ticks ` ` (grave tick)
@@ -28,10 +36,10 @@ function fetchCoords(cityName) {
         const lon = data[0].lon;
         // console.log(lat, lon)
         getWeather(lat, lon);
-        return {
-            lat: lat,
-            lon: lon,
-        }
+        // return {
+        //     lat: lat,
+        //     lon: lon,
+        // }
     })
 };
 
@@ -52,9 +60,9 @@ function getWeather(lat, lon) { // defining properties make sure they match lat 
         div.classList = 'card'
         city.innerText = `${searchInput.value}`
         date.innerText = `${currentDay}`
-        temp.innerText = `Temp: ${data.main.temp}`
-        wind.innerText = `Wind: ${data.wind.speed}`
-        humidity.innerText = `Humidity: ${data.main.humidity}`
+        temp.innerText = `Temp: ${data.main.temp}\u00B0 F`
+        wind.innerText = `Wind: ${data.wind.speed} MPH`
+        humidity.innerText = `Humidity: ${data.main.humidity}%`
 
         div.appendChild(city);
         div.appendChild(date);
@@ -80,7 +88,8 @@ function getForecast(lat, lon) {
     }).then(function (data) {
         // console.log(data);//returns an array of 40 objects breaking down the 5 days into 8 3 hour blocks
         let fiveDayArr = data.list.filter(forecast => forecast.dt_txt.includes("12:00:00"));
-        console.log(fiveDayArr);
+        // console.log(fiveDayArr);
+        let futureDate = dayjs(data.dt_txt).format('MM/DD/YYYY');
         fiveDayArr.forEach(data => {//forEach going through the data of the fiveDayArr
             const div = document.createElement('div');
             const date = document.createElement('h2');
@@ -89,10 +98,10 @@ function getForecast(lat, lon) {
             const humidity = document.createElement('h3');
 
             div.classList = 'card'
-            date.innerText = `${currentDay}`
-            temp.innerText = `Temp: ${data.main.temp}`
-            wind.innerText = `Wind: ${data.wind.speed}`
-            humidity.innerText = `Humidity: ${data.main.humidity}`
+            date.innerText = `${data.dt_txt}`
+            temp.innerText = `Temp: ${data.main.temp}\u00B0 F`
+            wind.innerText = `Wind: ${data.wind.speed} MPH`
+            humidity.innerText = `Humidity: ${data.main.humidity}%`
 
             div.appendChild(date);
             div.appendChild(temp);
@@ -102,6 +111,5 @@ function getForecast(lat, lon) {
         });
     })
 }
-//use js or jQuery to build the cards within the functions
 searchButton.addEventListener('click', onSearch)//when we click it will run the onSearch function
 
