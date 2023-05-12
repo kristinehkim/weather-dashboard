@@ -1,4 +1,4 @@
-# PWeather Dashboard
+# Weather Dashboard
 > This is a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS.  The 5 Day Weather Forecast on OpenWeather was used to retrieve the weather data for searched cities.  An API key was generated to retrieve the data.
 > Live demo [_here_](https://kristinehkim.github.io/weather-dashboard/). <!-- If you have the project hosted somewhere, include the link here. -->
 
@@ -32,7 +32,7 @@ The user will choose a particular city to find weather information.  Once a city
 
 
 ## Screenshots
-![Example screenshot](./img/screenshot.png)
+![Example screenshot](./assets/images/weather-dashboard.png)
 <!-- If you have screenshots you'd like to share, include them here. -->
 
 
