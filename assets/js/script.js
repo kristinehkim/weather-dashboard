@@ -5,16 +5,47 @@ let weatherContainer = document.querySelector('#weather-container');
 let searchButton = document.querySelector('#search-button');
 let searchInput = document.querySelector('#search');
 let currentDay = dayjs().format('dddd, MM/DD/YYYY');
-let searchHistory = [ ]
+var cityList = document.querySelector('#city-list');
+var formContainer = document.querySelector('#form-container');
+let searchHistory = []
+
+function renderSearch() {
+    for (var i = 0; i < searchHistory.length; i++) {
+        var search = searchHistory[i];
+        var li = document.createElement("li");
+        li.textContent = search;//add the text to that list element
+        li.setAttribute("data-index", i);
+        cityList.appendChild(li);
+        // localStorage.setItem('city', searchHistory.value)
+    }
+}
+// This function is being called below and will run when the page loads.
+function init() {//init is short for initialize
+    // Get stored searches as objects from localStorage
+    var storedSearch = JSON.parse(localStorage.getItem("city"));//this gets the stored searches
+
+    // If searches were retrieved from localStorage, update the searches array to it
+    if (storedSearch !== null) {//if its not null,
+        searchHistory = storedSearch;//make searches stored searches
+    }
+
+    // This is a helper function that will render searches to the DOM
+    renderSearch();//then render them
+}
+
+function storeSearches() {
+    // Stringify and set key in localStorage to search array
+    localStorage.setItem("city", JSON.stringify(searchHistory));//setting the searches in here and stringifying them because they can only be stored as a string
+}
 
 // onSearch is an eventListener that is grabbing the searchValue, and passing it to the fetchCoords function
 function onSearch(event) {
+    event.preventDefault();
     // assigning a variable searchValue to what the user inputs searchInput.value, searchValue is grabbing the city the user inputs
     let searchValue = searchInput.value;
-    // var searchResults = '/forecast?'
-    localStorage.setItem('city', searchValue);
-    // searchHistory.push.(searchValue)
-    // localStorage.setItem('city', searchHistory.value)
+    searchHistory.push(searchValue)
+    storeSearches();
+    renderSearch();
     // fetchCoords is being called, this returns the lat and lon data
     fetchCoords(searchValue);
 }
@@ -51,7 +82,7 @@ function getWeather(lat, lon) { // defining properties make sure they match lat 
     }).then(function (data) {
         // console.log(data);
         const div = document.createElement('div');
-        const city = document.createElement('h2'); 
+        const city = document.createElement('h2');
         const date = document.createElement('h2');
         const temp = document.createElement('h3');
         const wind = document.createElement('h3');
