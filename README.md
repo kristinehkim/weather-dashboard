@@ -16,7 +16,7 @@
 
 
 ## General Information
-The user will choose a particular city to find weather information.  Once a city is typed in the search box, the current weather and a 5 day forecast of the weather for that city will be displayed.  For each day, the temperature, wind speed, and humidity will be displayed, as well.
+The user can choose a particular city to find weather information.  Once a city is typed in the search box, the current weather and a 5 day forecast of the weather for that city will be displayed.  For each day, the temperature, wind speed, and humidity will be displayed, as well.  All cities searched will appear in a search history below.
 <!-- You don't have to answer all the questions - just the ones relevant to your project. -->
 
 
@@ -37,7 +37,7 @@ The user will choose a particular city to find weather information.  Once a city
 
 
 ## Usage
-The user will type a city name in the search box.  Once the search button is clicked, it will display current weather and a 5 day forecast.
+The user will type a city name in the search box.  Once the search button is clicked, it will display current weather and a future weather conditions.
 
 
 ## Project Status
@@ -45,15 +45,15 @@ Project is: _in progress_.
 
 
 ## Room for Improvement
-Include areas you believe need improvement / could be improved. Also add TODOs for future development.
-
 Room for improvement:
-- Improvement to be done 1
-- Improvement to be done 2
+- Clickable links for each city in the search history
+- Stlying needs to be improved
+- Dates on 5 day forecast needs to be fixed and get rid of time
 
 To do:
-- Feature to be added 1
-- Feature to be added 2
+- Add links and eventListeners for cities in the search history
+- CSS/Bootstrap styling
+- Dayjs and slice to fix the date and time
 
 
 ## Acknowledgements

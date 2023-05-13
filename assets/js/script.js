@@ -5,24 +5,23 @@ let weatherContainer = document.querySelector('#weather-container');
 let searchButton = document.querySelector('#search-button');
 let searchInput = document.querySelector('#search');
 let currentDay = dayjs().format('dddd, MM/DD/YYYY');
-var cityList = document.querySelector('#city-list');
-var formContainer = document.querySelector('#form-container');
+let cityList = document.querySelector('#city-list');
 let searchHistory = []
 
 function renderSearch() {
-    for (var i = 0; i < searchHistory.length; i++) {
-        var search = searchHistory[i];
-        var li = document.createElement("li");
+    cityList.innerHTML = "";//clearing the HTML before re-rendering the weather data with the new data for the city we just searched.
+    for (let i = 0; i < searchHistory.length; i++) {
+        let search = searchHistory[i];
+        let li = document.createElement("li");
         li.textContent = search;//add the text to that list element
         li.setAttribute("data-index", i);
         cityList.appendChild(li);
-        // localStorage.setItem('city', searchHistory.value)
     }
 }
 // This function is being called below and will run when the page loads.
 function init() {//init is short for initialize
     // Get stored searches as objects from localStorage
-    var storedSearch = JSON.parse(localStorage.getItem("city"));//this gets the stored searches
+    let storedSearch = JSON.parse(localStorage.getItem("city"));//this gets the stored searches
 
     // If searches were retrieved from localStorage, update the searches array to it
     if (storedSearch !== null) {//if its not null,
@@ -49,11 +48,6 @@ function onSearch(event) {
     // fetchCoords is being called, this returns the lat and lon data
     fetchCoords(searchValue);
 }
-//declare global variable of search history as an empty array.  Then push that value to the array and set that search history array to local storage.
-// Update the array, JSON stringify it, and store 
-// on load you have to parse it
-// Start with saving the array
-// create a new element of list item, add the search value as its value, append the list item that will display the search history
 
 // taking the cityName the user inputs and getting the lat and lon
 function fetchCoords(cityName) {
@@ -67,10 +61,6 @@ function fetchCoords(cityName) {
         const lon = data[0].lon;
         // console.log(lat, lon)
         getWeather(lat, lon);
-        // return {
-        //     lat: lat,
-        //     lon: lon,
-        // }
     })
 };
 
@@ -80,7 +70,8 @@ function getWeather(lat, lon) { // defining properties make sure they match lat 
     fetch(requestUrl).then(function (response) {
         return response.json()
     }).then(function (data) {
-        // console.log(data);
+        weatherContainer.innerHTML = "";
+
         const div = document.createElement('div');
         const city = document.createElement('h2');
         const date = document.createElement('h2');
@@ -103,11 +94,6 @@ function getWeather(lat, lon) { // defining properties make sure they match lat 
         weatherContainer.appendChild(div);
 
         getForecast(lat, lon);
-        // return {
-        //     wind: wind,
-        //     temp: temp,
-        //     humidity: humidity
-        // }
     })
 };
 
@@ -117,9 +103,10 @@ function getForecast(lat, lon) {
     fetch(requestUrl).then(function (response) {
         return response.json()
     }).then(function (data) {
-        // console.log(data);//returns an array of 40 objects breaking down the 5 days into 8 3 hour blocks
+        forecastContainer.innerHTML = "";
+        //data returns an array of 40 objects breaking down the 5 days into 8 3 hour blocks
         let fiveDayArr = data.list.filter(forecast => forecast.dt_txt.includes("12:00:00"));
-        // console.log(fiveDayArr);
+
         let futureDate = dayjs(data.dt_txt).format('MM/DD/YYYY');
         fiveDayArr.forEach(data => {//forEach going through the data of the fiveDayArr
             const div = document.createElement('div');
